@@ -1,5 +1,6 @@
 package com.example.toDo.service;
 
+import com.example.toDo.dto.TaskDTO;
 import com.example.toDo.model.Task;
 import com.example.toDo.repository.TaskRepository;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,24 @@ import java.util.Optional;
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
+
+    public TaskDTO convertToDTO(Task task){
+        TaskDTO dto= new TaskDTO();
+        dto.setTitle(task.getTitle());
+        dto.setDescription(task.getDescription());
+        dto.setCompleted(task.isCompleted());
+        dto.setId(task.getId());
+        return dto;
+    }
+
+    public Task convertToEntity(TaskDTO dto){
+        Task task = new Task();
+        task.setTitle(dto.getTitle());
+        task.setDescription(dto.getDescription());
+        task.setCompleted(dto.isCompleted());
+        task.setId(dto.getId());
+        return task;
+    }
 
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
