@@ -58,6 +58,7 @@ pipeline {
                     sh """
                         pwd
                         ls
+                        cd toDo
                         docker build -t ${env.IMAGE_NAME}:${imageTag} .
                     """
                 }
