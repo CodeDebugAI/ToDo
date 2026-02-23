@@ -34,7 +34,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                git branch: 'main',
+                git branch: 'master-enhanced',
                     url: 'https://github.com/CodeDebugAI/ToDo.git'
 
                 // Run Maven on a Unix agent.
