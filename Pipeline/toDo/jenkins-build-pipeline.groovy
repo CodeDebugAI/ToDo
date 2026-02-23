@@ -81,6 +81,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-ghcr', usernameVariable: 'USER', passwordVariable: 'TOKEN')]) {
                     sh 'echo $TOKEN | docker login ghcr.io -u $USER --password-stdin'
+                    echo "Docker Push"
+                    sh "docker push ${env.IMAGE_NAME}:${params.VERSION}"
                 }
             }
         }
