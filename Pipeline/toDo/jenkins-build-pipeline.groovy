@@ -35,10 +35,10 @@ pipeline {
             steps {
                 // Get some code from a GitHub repository
                 git branch: 'main',
-                    url: 'https://github.com/irajkumarraj/SpringBootApplication.git'
+                    url: 'https://github.com/CodeDebugAI/ToDo.git'
 
                 // Run Maven on a Unix agent.
-                dir('toDo') {
+                dir('/SourceCode/toDo/') {
                     sh 'mvn clean install -U -DskipTests'
                 }
 
@@ -56,9 +56,11 @@ pipeline {
                     echo "Building Docker image: ${env.IMAGE_NAME}:${imageTag}"
 
                     sh """
+                        echo ${WORKSPACE}
                         pwd
                         ls
-                        cd toDo
+                        cd ${WORKSPACE}/toDo
+                        ls
                         docker build -t ${env.IMAGE_NAME}:${imageTag} .
                     """
                 }
