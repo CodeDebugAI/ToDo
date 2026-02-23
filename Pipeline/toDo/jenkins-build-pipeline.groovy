@@ -79,7 +79,7 @@ pipeline {
         }
         stage('Login to Registry') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'ghcr-token', usernameVariable: 'USER', passwordVariable: 'TOKEN')]) {
+                withCredentials([usernamePassword(credentialsId: 'docker-ghcr', usernameVariable: 'USER', passwordVariable: 'TOKEN')]) {
                     sh 'echo $TOKEN | docker login ghcr.io -u $USER --password-stdin'
                 }
             }
