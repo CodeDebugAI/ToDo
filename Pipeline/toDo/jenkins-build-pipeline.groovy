@@ -42,9 +42,9 @@ pipeline {
                 echo "Root Directory : ${WORKSPACE}"
                 echo "Pwd:"
                 pwd
-                eho "list:"
+                echo "list:"
                 ls
-                dir('/SourceCode/toDo/') {
+                dir('${WORKSPACE}/SourceCode/toDo') {
                     echo "Root Directory : ${WORKSPACE}"
                     echo "pwd:"
                     pwd
@@ -70,7 +70,7 @@ pipeline {
                         echo ${WORKSPACE}
                         pwd
                         ls
-                        cd ${WORKSPACE}/toDo
+                        cd ${WORKSPACE}/SourceCode/toDo
                         ls
                         docker build -t ${env.IMAGE_NAME}:${imageTag} .
                     """
