@@ -12,6 +12,7 @@ pipeline {
     environment {
         TRIGGER_TIME = "${new Date().format('yyyy-MM-dd_HH:mm:ss')}"
         IMAGE_NAME = "todo"  // Change this to your Docker image name
+        GITHUB_USER= "irajkumarraj"
     }
 
     tools {
@@ -64,7 +65,8 @@ pipeline {
                 script {
                     // Build Docker image and tag it with version and trigger time
                     def imageTag = "${params.VERSION}"
-                    echo "Building Docker image: ${env.IMAGE_NAME}:${imageTag}"
+                    def fullImageName = "ghcr.io/${env.GITHUB_USER}/${env.IMAGE_NAME}"
+                    echo "Building Docker image: ${fullImageName}:${imageTag}"
 
                     sh """
                         echo ${WORKSPACE}
@@ -72,7 +74,7 @@ pipeline {
                         ls
                         cd SourceCode/toDo
                         ls
-                        docker build -t ${env.IMAGE_NAME}:${imageTag} .
+                        docker build -t ${fullImageName}:${imageTag} .
                     """
                 }
             }
@@ -82,7 +84,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'docker-ghcr', usernameVariable: 'USER', passwordVariable: 'TOKEN')]) {
                     sh 'echo $TOKEN | docker login ghcr.io -u $USER --password-stdin'
                     echo "Docker Push"
-                    sh "docker push ${env.IMAGE_NAME}:${params.VERSION}"
+                    sh "docker push ${fullImageName}:${imageTag}"
                 }
             }
         }
