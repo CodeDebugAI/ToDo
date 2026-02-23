@@ -52,7 +52,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker image and tag it with version and trigger time
-                    def imageTag = "${params.VERSION}-${env.TRIGGER_TIME}"
+                    def imageTag = "${params.VERSION}"
                     echo "Building Docker image: ${env.IMAGE_NAME}:${imageTag}"
 
                     sh """
