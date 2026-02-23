@@ -41,15 +41,15 @@ pipeline {
                 // Run Maven on a Unix agent.
                 echo "Root Directory : ${WORKSPACE}"
                 echo "Pwd:"
-                pwd
+                sh 'pwd'
                 echo "list:"
-                ls
+                sh 'ls'
                 dir('${WORKSPACE}/SourceCode/toDo') {
                     echo "Root Directory : ${WORKSPACE}"
                     echo "pwd:"
-                    pwd
+                    sh 'pwd'
                     echo "list:"
-                    ls
+                    sh 'ls'
                     sh 'mvn clean install -U -DskipTests'
                 }
 
