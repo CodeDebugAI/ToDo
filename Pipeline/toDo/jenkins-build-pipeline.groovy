@@ -67,6 +67,7 @@ pipeline {
                     def imageTag = "${params.VERSION}"
                     def fullImageName = "ghcr.io/${env.GITHUB_USER}/${env.IMAGE_NAME}"
                     echo "Building Docker image: ${fullImageName}:${imageTag}"
+                    env.FULL_IMAGE_NAME = "${fullImageName}:${imageTag}"
 
                     sh """
                         echo ${WORKSPACE}
@@ -74,7 +75,7 @@ pipeline {
                         ls
                         cd SourceCode/toDo
                         ls
-                        docker build -t ${fullImageName}:${imageTag} .
+                        docker build -t ${env.FULL_IMAGE_NAME} .
                     """
                 }
             }
@@ -84,7 +85,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'docker-ghcr', usernameVariable: 'USER', passwordVariable: 'TOKEN')]) {
                     sh 'echo $TOKEN | docker login ghcr.io -u $USER --password-stdin'
                     echo "Docker Push"
-                    sh "docker push ${fullImageName}:${imageTag}"
+                    sh "docker push ${env.FULL_IMAGE_NAME}"
                 }
             }
         }
