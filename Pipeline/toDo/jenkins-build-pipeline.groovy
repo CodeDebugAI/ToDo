@@ -27,6 +27,7 @@ pipeline {
         }
         stage('Print Info') {
             steps {
+                echo "Root Directory : ${WORKSPACE}"
                 echo "Job triggered at: ${env.TRIGGER_TIME}"
                 echo "Building Docker image version: ${params.VERSION}"
             }
@@ -38,7 +39,17 @@ pipeline {
                     url: 'https://github.com/CodeDebugAI/ToDo.git'
 
                 // Run Maven on a Unix agent.
+                echo "Root Directory : ${WORKSPACE}"
+                echo "Pwd:"
+                pwd
+                eho "list:"
+                ls
                 dir('/SourceCode/toDo/') {
+                    echo "Root Directory : ${WORKSPACE}"
+                    echo "pwd:"
+                    pwd
+                    echo "list:"
+                    ls
                     sh 'mvn clean install -U -DskipTests'
                 }
 
