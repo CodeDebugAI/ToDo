@@ -89,7 +89,7 @@ pipeline {
                 }
             }
         }
-        stage('Clean Workspace Directory') {
+        stage('Clean docker and Workspace Directory') {
             when {
                 expression {
                     // run if previous stages succeeded or the build was aborted
@@ -97,13 +97,14 @@ pipeline {
                 }
             }
             steps {
+                echo "Removing docker images from agent"
                 sh '''
                     docker rmi ${env.FULL_IMAGE_NAME} || true
                     docker image prune -f
                     docker builder prune -f
                 '''
-            }
-            steps {
+
+                echo "Clean Workspace Directory"
                 cleanWs()
             }
         }
