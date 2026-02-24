@@ -12,7 +12,7 @@ pipeline {
     environment {
         TRIGGER_TIME = "${new Date().format('yyyy-MM-dd_HH:mm:ss')}"
         IMAGE_NAME = "todo"  // Change this to your Docker image name
-        GITHUB_USER= "CodeDebugAI"
+        GITHUB_USER= "codedebugai"
     }
 
     tools {
