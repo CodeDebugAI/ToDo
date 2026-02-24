@@ -97,6 +97,13 @@ pipeline {
                 }
             }
             steps {
+                sh '''
+                    docker rmi ${env.FULL_IMAGE_NAME} || true
+                    docker image prune -f
+                    docker builder prune -f
+                '''
+            }
+            steps {
                 cleanWs()
             }
         }
