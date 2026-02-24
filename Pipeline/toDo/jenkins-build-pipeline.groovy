@@ -99,7 +99,7 @@ pipeline {
             steps {
                 echo "Removing docker images from agent"
                 sh '''
-                    docker rmi ${env.FULL_IMAGE_NAME} || true
+                    docker rmi "${env.FULL_IMAGE_NAME}" || true
                     docker image prune -f
                     docker builder prune -f
                 '''
