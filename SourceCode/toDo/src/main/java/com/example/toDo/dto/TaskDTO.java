@@ -1,8 +1,10 @@
 package com.example.toDo.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+@JsonIgnoreProperties(ignoreUnknown = false)
 public class TaskDTO {
 
     @NotBlank(message = "Title cannot be blank")
