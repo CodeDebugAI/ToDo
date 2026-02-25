@@ -1,5 +1,6 @@
 package com.example.toDo.exception;
 
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,5 +18,11 @@ public class ValidationExceptionHandler {
             ex.getBindingResult().getFieldErrors().forEach( err->
                     errors.put(err.getField(),err.getDefaultMessage()));
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        }
+
+        @ExceptionHandler(UnrecognizedPropertyException.class)
+        public ResponseEntity<String> handleUnknownFields(UnrecognizedPropertyException ex) {
+            String message = "Unknown field: " + ex.getPropertyName();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
         }
 }
